@@ -1,0 +1,55 @@
+package com.cafe.service.impl;
+
+import java.util.Map;
+import java.util.Objects;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
+
+import com.cafe.constents.CafeConstents;
+import com.cafe.dao.UserDao;
+import com.cafe.pojo.User;
+import com.cafe.service.UserService;
+import com.cafe.utils.CafeUtils;
+
+import lombok.extern.slf4j.Slf4j;
+
+@Service
+@Slf4j
+public class UserServiceImpl implements UserService {
+
+	@Autowired
+	UserDao userDao;
+	
+	public ResponseEntity<String> signup(Map<String, String> requestMap) {
+		// TODO Auto-generated method stub
+		log.info("Inside signup{}",requestMap);
+		if(validateSignUpMap(requestMap)) {
+			User user=userDao.findByEmailId(requestMap.get("email"));
+			if(Objects.isNull(user)) {
+				userDao.save(null);
+			}
+			
+		}
+		else {
+			return CafeUtils.getResponseEntity(CafeConstents.INVALID_DATA, HttpStatus.BAD_REQUEST);
+		}
+		return null;
+
+	}
+	
+	
+	private boolean validateSignUpMap(Map<String,  String> requestMap) {
+		if(requestMap.containsKey("name") && requestMap.containsKey("contactNumber") && requestMap.containsKey("email")&&requestMap.containsKey("password")){
+			return true;
+		}
+		return false;
+	
+		
+	}
+	
+
+
+}

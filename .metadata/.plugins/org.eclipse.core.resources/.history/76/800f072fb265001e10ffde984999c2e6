@@ -1,0 +1,5 @@
+package com.cafe.wrapper;
+
+public class UserWrapper {
+
+}

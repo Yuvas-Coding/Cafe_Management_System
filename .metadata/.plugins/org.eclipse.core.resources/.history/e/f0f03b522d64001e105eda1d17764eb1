@@ -1,0 +1,15 @@
+package com.cafe.jwt;
+
+public class JwtUtil {
+	
+	//create secret key
+	
+	private String secret = "mani@1234";
+	
+	
+	
+	
+	
+	
+	
+}
